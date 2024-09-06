@@ -1,11 +1,13 @@
 package Services.Implementations;
 
-import Services.Interfaces.UserInterface;
-import Domain.*;
-import  config.*;
+import Domain.Consumption;
+import Domain.User;
+import Services.UserInterface;
+
+import java.util.List;
 
 
-public  class UserImplementation implements UserInterface {
+public class UserServiceImpl implements UserInterface {
 //    @Override
 //    public User getUser(int id) {
 //        return Database.getDatabase().getUsers().stream().filter(user -> user.getId() == id).findFirst().orElse(null);
@@ -22,9 +24,12 @@ public  class UserImplementation implements UserInterface {
 //        Database.getDatabase().getUsers().remove(user);
 //    }
 
-//    @Override
+    //    @Override
 //    public List<User> getAllUsers() {
 //        return Database.getDatabase().getUsers();
 //    }
+    @Override
+    public List<User> filterUsersByConsumptionTotal(User user){
 
+    }
 }

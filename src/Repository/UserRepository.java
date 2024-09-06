@@ -1,6 +1,6 @@
 package Repository;
 
-import Services.Interfaces.UserInterface;
+import Services.UserInterface;
 import Domain.*;
 
 import java.util.List;

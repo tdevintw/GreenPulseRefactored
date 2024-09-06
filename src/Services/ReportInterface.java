@@ -1,4 +1,4 @@
-package Services.Interfaces;
+package Services;
 
 public interface ReportInterface {
 }

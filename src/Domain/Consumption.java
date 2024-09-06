@@ -13,6 +13,7 @@ public abstract class Consumption {
     protected final LocalDate end_date;
     protected User user;
     protected final LocalDateTime created_date;
+    protected float impact;
 
     public Consumption(float carbonQuantity, LocalDate start_date, LocalDate end_date, User user) {
         this.id = (int) (Math.random() * 1000000000);
@@ -62,4 +63,19 @@ public abstract class Consumption {
 
     public abstract float calculateImpact(int param, AllTypesOfConsumption typeOfVehicle);
 
+    public ConsumptionType getConsumptionType() {
+        return consumptionType;
     }
+
+    public void setConsumptionType(ConsumptionType consumptionType) {
+        this.consumptionType = consumptionType;
+    }
+
+    public float getImpact() {
+        return impact;
+    }
+
+    public void setImpact(float impact) {
+        this.impact = impact;
+    }
+}

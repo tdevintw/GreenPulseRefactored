@@ -1,4 +1,4 @@
-package Services.Interfaces;
+package Services;
 
 import Domain.User;
 
@@ -12,4 +12,8 @@ public interface UserInterface {
     void delete(User user);
 
     List<User> getAllUsers();
+
+    List<User> filterUsersWithMoreThen3000();
+
+    List<User> filterUsersByConsumptionTotal();
 }

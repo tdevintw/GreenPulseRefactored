@@ -1,4 +1,4 @@
 package Services.Implementations;
 
-public class ReportImplementation {
+public class ReportServiceImpl {
 }

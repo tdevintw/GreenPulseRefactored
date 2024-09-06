@@ -1,8 +1,6 @@
-package Domain.Child;
+package Domain;
 
-import Domain.Consumption;
 import Domain.Enum.AllTypesOfConsumption;
-import Domain.User;
 
 import java.time.LocalDate;
 

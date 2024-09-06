@@ -1,14 +1,19 @@
 import Domain.User;
-import Repository.UserRepository;
-import Services.Implementations.UserImplementation;
-import Services.Interfaces.UserInterface;
+import Repository.*;
+import Services.ConsumptionService;
+import Services.Implementations.*;
 import Auth.*;
-import java.util.List;
+import Services.UserInterface;
+
 import java.util.Scanner;
 
 public class Main {
-    private static  UserInterface userService = new UserImplementation() ;
+    private static UserInterface userService = new UserServiceImpl();
     private static UserRepository userRepository = new UserRepository(userService);
+    private static ConsumptionService consumptionService = new ConsumptionServiceImpl();
+    private static ConsumptionRepository consumptionRepository = new ConsumptionRepository();
+
+
 
 
     private static User currentUser;
@@ -48,7 +53,7 @@ public class Main {
                 """
                          1-Update Personal Information \n
                          2-Add Consumption \n
-                         3-Filter Users By consumption \n
+                         3-Filter Users By consumption Total \n
                          4-Create Report \n
                          5-Calculate Average of Consumption in a range of date \n
                          6-My Consumptions \n
@@ -237,35 +242,28 @@ public class Main {
     }
 
 
-
     public static void createReport() {
     }
-
 
 
     public static void calculateOfConsumptionInARangeOfDate() {
     }
 
 
-
     public static void myConsumptions() {
     }
-
 
 
     public static void myReports() {
     }
 
 
-
     public static void filterUserWithMoreConsumptionThen3000KG() {
     }
 
 
-
     public static void getInactiveUsers() {
     }
-
 
 
 }
