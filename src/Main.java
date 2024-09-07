@@ -4,21 +4,21 @@ import Services.ConsumptionService;
 import Services.Implementations.*;
 import Auth.*;
 import Services.UserInterface;
-
+import java.sql.*;
 import java.util.Scanner;
 
 public class Main {
+
     private static UserInterface userService = new UserServiceImpl();
     private static UserRepository userRepository = new UserRepository(userService);
     private static ConsumptionService consumptionService = new ConsumptionServiceImpl();
     private static ConsumptionRepository consumptionRepository = new ConsumptionRepository();
 
-
-
-
     private static User currentUser;
 
     public static void main(String[] args) {
+
+        Class.forName("org.postgresql.Driver");
         while (currentUser == null) {
             notAuthMenu();
         }

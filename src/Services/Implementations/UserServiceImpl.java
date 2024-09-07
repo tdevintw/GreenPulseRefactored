@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserInterface {
 //    }
 
 //    @Override
-//    public void delete(User user) { //choosing to delete with id  because remove(int index) is faster compared to remove(Object o)
+//    pQublic void delete(User user) { //choosing to delete with id  because remove(int index) is faster compared to remove(Object o)
 //        Database.getDatabase().getUsers().remove(user);
 //    }
 

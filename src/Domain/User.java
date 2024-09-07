@@ -10,7 +10,7 @@ public class User {
     private List<Consumption> consumptions ;
 
     public User(int id, String name, String password, int age) {
-        this.id = id;
+        this.id = (int) (Math.random()*1000000000);
         this.name = name;
         this.password = password;
         this.age = age;
