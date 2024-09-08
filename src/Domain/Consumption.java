@@ -8,30 +8,27 @@ import java.time.LocalDateTime;
 public abstract class Consumption {
     protected final int id;
     protected float carbonQuantity;
+    protected float impact;
+    protected User user;
     protected ConsumptionType consumptionType;
     protected AllTypesOfConsumption consumptionImpactType;
-    protected final LocalDate start_date;
-    protected final LocalDate end_date;
-    protected User user;
-    protected final LocalDateTime created_date;
-    protected float impact;
+    protected LocalDate startDate;
+    protected LocalDate endDate;
 
-    public Consumption( int id , float carbonQuantity, LocalDate start_date, LocalDate end_date, User user) {
+    public Consumption(int id , User user , float carbonQuantity , float impact , ConsumptionType consumptionType , AllTypesOfConsumption consumptionImpactType , LocalDate startDate , LocalDate endDate ){
         this.id = id;
-        this.carbonQuantity = carbonQuantity;
-        this.start_date = start_date;
-        this.end_date = end_date;
         this.user = user;
-        this.created_date = LocalDateTime.now();
+        this.carbonQuantity = carbonQuantity;
+        this.impact = impact;
+        this.consumptionType = consumptionType;
+        this.consumptionImpactType = consumptionImpactType;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
-
-
 
     public int getId() {
         return id;
     }
-
-
 
     public float getCarbonQuantity() {
         return carbonQuantity;
@@ -39,37 +36,6 @@ public abstract class Consumption {
 
     public void setCarbonQuantity(float carbonQuantity) {
         this.carbonQuantity = carbonQuantity;
-    }
-
-    public LocalDate getStart_date() {
-        return start_date;
-    }
-
-
-    public LocalDate getEnd_date() {
-        return end_date;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public LocalDateTime getCreated_date() {
-        return created_date;
-    }
-
-    public abstract float calculateImpact(int param, AllTypesOfConsumption typeOfVehicle);
-
-    public ConsumptionType getConsumptionType() {
-        return consumptionType;
-    }
-
-    public void setConsumptionType(ConsumptionType consumptionType) {
-        this.consumptionType = consumptionType;
     }
 
     public float getImpact() {
@@ -80,6 +46,22 @@ public abstract class Consumption {
         this.impact = impact;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public ConsumptionType getConsumptionType() {
+        return consumptionType;
+    }
+
+    public void setConsumptionType(ConsumptionType consumptionType) {
+        this.consumptionType = consumptionType;
+    }
+
     public AllTypesOfConsumption getConsumptionImpactType() {
         return consumptionImpactType;
     }
@@ -87,4 +69,22 @@ public abstract class Consumption {
     public void setConsumptionImpactType(AllTypesOfConsumption consumptionImpactType) {
         this.consumptionImpactType = consumptionImpactType;
     }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public abstract float calculateImpact(int integerParam, AllTypesOfConsumption typeOfVehicle);
 }

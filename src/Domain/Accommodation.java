@@ -1,13 +1,14 @@
 package Domain;
 
 import Domain.Enum.AllTypesOfConsumption;
+import Domain.Enum.ConsumptionType;
 
 import java.time.LocalDate;
 
 public class Accommodation extends Consumption {
 
-    public Accommodation(float carbonQuantity, LocalDate start_date, LocalDate end_date, User user) {
-        super(carbonQuantity, start_date, end_date, user);
+    public Accommodation(int id , User user , float carbonQuantity , float impact , AllTypesOfConsumption consumptionImpactType , LocalDate startDate , LocalDate endDate) {
+        super(id ,user , carbonQuantity ,impact , ConsumptionType.TRANSPORT, consumptionImpactType ,  startDate ,  endDate);
     }
 
     @Override
@@ -20,7 +21,7 @@ public class Accommodation extends Consumption {
         } else {
             return 0;
         }
-        return quantity * impact;
+        return quantity * impact * carbonQuantity;
     }
 
 }

@@ -15,7 +15,7 @@ import java.util.Optional;
 public class UserRepository {
 
 
-    public User getUser(int id) {
+    public  User getUser(int id) {
         Optional<User> user = getAllUsers().stream().filter(user1 -> user1.getId() == id).findFirst();
         if (user.isPresent()) {
             return user.get();
