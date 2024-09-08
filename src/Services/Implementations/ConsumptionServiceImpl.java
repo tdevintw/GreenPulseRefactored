@@ -1,6 +1,7 @@
 package Services.Implementations;
 
 import Domain.*;
+import Domain.Enum.AllTypesOfConsumption;
 import Domain.Enum.ConsumptionType;
 import Services.ConsumptionService;
 
@@ -11,27 +12,17 @@ import java.util.stream.Collectors;
 public class ConsumptionServiceImpl implements ConsumptionService {
 
 
-    public boolean add(float carbonQuantity, ConsumptionType consumptionType, LocalDate startDate, LocalDate endDate, User user) {
+    public boolean add(ConsumptionType consumptionType, int id, User user, float carbonQuantity, int intParam, AllTypesOfConsumption consumptionImpactType, LocalDate startDate, LocalDate endDate) {
         Consumption consumption = switch (consumptionType) {
-            case TRANSPORT -> new Transport(carbonQuantity, startDate, endDate, user);
-            case FOOD -> new Food(carbonQuantity, startDate, endDate, user);
-            case ACCOMMODATION -> new Accommodation(carbonQuantity, startDate, endDate, user);
+            case TRANSPORT -> new Transport(id, user, carbonQuantity, intParam, consumptionImpactType, startDate, endDate);
+            case FOOD -> new Food(id, user, carbonQuantity, intParam, consumptionImpactType, startDate, endDate);
+            case ACCOMMODATION ->
+                    new Accommodation(id, user, carbonQuantity, intParam, consumptionImpactType, startDate, endDate);
         };
-        try {
-            user.setConsumption(consumption);
-            //here we add consumption to databse
-            return true;
-        } catch (Exception e) {
-            System.err.println("An Error was found : " + e.getMessage());
-            return false;
-        }
+        return true;
     }
 
     public float calculateAverageOfConsumptionWithinARange(User user, LocalDate startDate, LocalDate endDate) {
-        return user.getConsumptions().stream()
-                .filter(consumption -> consumption.getStart_date().isAfter(startDate) || consumption.getStart_date().equals(startDate))
-                .filter(consumption -> consumption.getEnd_date().isBefore(endDate) || consumption.getEnd_date().equals(endDate))
-                .map(Consumption::getImpact)
-                .reduce(Float::sum).get();
+        return 0;
     }
 }

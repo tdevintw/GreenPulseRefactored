@@ -15,11 +15,10 @@ public abstract class Consumption {
     protected LocalDate startDate;
     protected LocalDate endDate;
 
-    public Consumption(int id , User user , float carbonQuantity , float impact , ConsumptionType consumptionType , AllTypesOfConsumption consumptionImpactType , LocalDate startDate , LocalDate endDate ){
+    public Consumption(int id , User user , float carbonQuantity , ConsumptionType consumptionType , AllTypesOfConsumption consumptionImpactType , LocalDate startDate , LocalDate endDate ){
         this.id = id;
         this.user = user;
         this.carbonQuantity = carbonQuantity;
-        this.impact = impact;
         this.consumptionType = consumptionType;
         this.consumptionImpactType = consumptionImpactType;
         this.startDate = startDate;
@@ -86,5 +85,5 @@ public abstract class Consumption {
         this.endDate = endDate;
     }
 
-    public abstract float calculateImpact(int integerParam, AllTypesOfConsumption typeOfVehicle);
+    public abstract float calculateImpact();
 }
