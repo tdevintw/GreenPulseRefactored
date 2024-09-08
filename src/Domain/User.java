@@ -48,6 +48,9 @@ public class User {
     public List<Consumption> getConsumptions() {
         return consumptions;
     }
+    public void setConsumptions(List<Consumption> consumptions) {
+        this.consumptions = consumptions;
+    }
 
     public void setConsumption(Consumption consumption) {
         this.consumptions.add(consumption);

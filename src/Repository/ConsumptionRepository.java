@@ -38,7 +38,7 @@ public class ConsumptionRepository {
         String query = "SELECT * FROM consumptions";
         List<Consumption> allConsumptions = new ArrayList<>();
         UserRepository userRepository = new UserRepository();
-        User user ;
+        User user;
         try (Connection connection = Database.getInstance().getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             ResultSet consumptionsSet = preparedStatement.executeQuery();
             Consumption consumption;
@@ -65,5 +65,73 @@ public class ConsumptionRepository {
         }
         return allConsumptions;
     }
+
+    public boolean update(Consumption consumption) {
+        String query = "UPDATE  consumptions SET carbon_quantity = ?,impact = ?,start_date=?,end_date=? WHERE id = ?";
+        try (Connection connection = Database.getInstance().getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setFloat(1, consumption.getCarbonQuantity());
+            preparedStatement.setFloat(2, consumption.getImpact());
+            preparedStatement.setDate(3, Date.valueOf(consumption.getStartDate()));
+            preparedStatement.setDate(4, Date.valueOf(consumption.getEndDate()));
+            preparedStatement.setInt(5, consumption.getId());
+            int affectedRows = preparedStatement.executeUpdate();
+            if(affectedRows>0){
+                System.out.println("consumption updated");
+                return true;
+            }else{
+                System.out.println("can't update consumption");
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Consumption> getUserConsumptions(int user_id){
+        String query = "SELECT * FROM consumptions WHERE user_id = ?";
+        List<Consumption> allUserConsumptions = new ArrayList<>();
+        Consumption consumption ;
+        UserRepository userRepository = new UserRepository();
+        User user = userRepository.getUser(user_id);
+        try (Connection connection = Database.getInstance().getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, user_id);
+            ResultSet userConsumptions = preparedStatement.executeQuery();
+            while(userConsumptions.next()){
+                int id = userConsumptions.getInt("id");
+                float carbonQuantity = userConsumptions.getFloat("carbon_quantity");
+                float impact = userConsumptions.getFloat("impact");
+                AllTypesOfConsumption impactType = AllTypesOfConsumption.valueOf(userConsumptions.getString("consumption_impact_type"));
+                LocalDate startDate = userConsumptions.getDate("start_date").toLocalDate();
+                LocalDate endDate = userConsumptions.getDate("end_date").toLocalDate();
+                consumption = switch (userConsumptions.getString("consumption_type")) {
+                    case "TRANSPORT" -> new Transport(id, user, carbonQuantity, impact, impactType, startDate, endDate);
+                    case "FOOD" -> new Food(id, user, carbonQuantity, impact, impactType, startDate, endDate);
+                    default -> new Accommodation(id, user, carbonQuantity, impact, impactType, startDate, endDate);
+                };
+                allUserConsumptions.add(consumption);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return allUserConsumptions;
+    }
+
+    public boolean delete(Consumption consumption) {
+        String query = "DELETE FROM consumptions WHERE id = ?";
+        try (Connection connection = Database.getInstance().getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, consumption.getId());
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows > 0) {
+                System.out.println("Consumptions was deleted");
+                return true;
+            } else {
+                System.out.println("Consumption fail to delete");
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }
