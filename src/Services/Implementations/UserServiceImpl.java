@@ -7,7 +7,7 @@ import Services.UserInterface;
 import java.util.List;
 
 
-public class UserServiceImpl implements UserInterface {
+public class UserServiceImpl  {
 //    @Override
 //    public User getUser(int id) {
 //        return Database.getDatabase().getUsers().stream().filter(user -> user.getId() == id).findFirst().orElse(null);
@@ -28,8 +28,5 @@ public class UserServiceImpl implements UserInterface {
 //    public List<User> getAllUsers() {
 //        return Database.getDatabase().getUsers();
 //    }
-    @Override
-    public List<User> filterUsersByConsumptionTotal(User user){
 
-    }
 }

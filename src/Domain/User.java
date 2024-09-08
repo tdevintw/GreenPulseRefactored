@@ -9,8 +9,8 @@ public class User {
     private int age ;
     private List<Consumption> consumptions ;
 
-    public User(int id, String name, String password, int age) {
-        this.id = (int) (Math.random()*1000000000);
+    public User(int id ,  String name, String password, int age) {
+        this.id = id;
         this.name = name;
         this.password = password;
         this.age = age;

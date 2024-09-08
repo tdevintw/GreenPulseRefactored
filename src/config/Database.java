@@ -6,16 +6,15 @@ import java.sql.*;
 public class Database {
     private static Database instance;
     private Connection connection;
-    private String url = "jdbc:postgresql://localhost:5432/greenpulse";
-    private String username = "GreenPulse";
-    private String password = "";
+    private String url = "jdbc:postgresql://localhost:5433/GreenPulse";
+    private String username = "postgres";
+    private String password = "ysrysr";
 
     private Database() throws SQLException {
         try {
             Class.forName("org.postgresql.Driver");
             this.connection = DriverManager.getConnection(url, username, password);
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
             throw new SQLException(e);
         }
     }
