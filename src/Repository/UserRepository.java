@@ -67,6 +67,7 @@ public class UserRepository {
     public List<User> getAllUsers() {
         String query = "SELECT * FROM users";
         try (Connection connection = Database.getInstance().getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            ConsumptionRepository consumptionRepository = new ConsumptionRepository();
             List<User> users = new ArrayList<>();
             User user;
             ResultSet allUsers = preparedStatement.executeQuery();
@@ -76,6 +77,7 @@ public class UserRepository {
                 String userPassword = allUsers.getString("password");
                 int userAge = allUsers.getInt("age");
                 user = new User(id, username, userPassword, userAge);
+                user.setConsumptions(consumptionRepository.getUserConsumptions(id));
                 users.add(user);
             }
             return users;
