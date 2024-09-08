@@ -9,14 +9,15 @@ public abstract class Consumption {
     protected final int id;
     protected float carbonQuantity;
     protected ConsumptionType consumptionType;
+    protected AllTypesOfConsumption consumptionImpactType;
     protected final LocalDate start_date;
     protected final LocalDate end_date;
     protected User user;
     protected final LocalDateTime created_date;
     protected float impact;
 
-    public Consumption(float carbonQuantity, LocalDate start_date, LocalDate end_date, User user) {
-        this.id = (int) (Math.random() * 1000000000);
+    public Consumption( int id , float carbonQuantity, LocalDate start_date, LocalDate end_date, User user) {
+        this.id = id;
         this.carbonQuantity = carbonQuantity;
         this.start_date = start_date;
         this.end_date = end_date;
@@ -77,5 +78,13 @@ public abstract class Consumption {
 
     public void setImpact(float impact) {
         this.impact = impact;
+    }
+
+    public AllTypesOfConsumption getConsumptionImpactType() {
+        return consumptionImpactType;
+    }
+
+    public void setConsumptionImpactType(AllTypesOfConsumption consumptionImpactType) {
+        this.consumptionImpactType = consumptionImpactType;
     }
 }
