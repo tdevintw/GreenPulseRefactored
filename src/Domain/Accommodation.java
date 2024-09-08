@@ -9,13 +9,13 @@ public class Accommodation extends Consumption {
 
     private int quantity ;
 
-    public Accommodation(int id , User user , float carbonQuantity , int quantity ,  AllTypesOfConsumption consumptionImpactType , LocalDate startDate , LocalDate endDate) {
-        super(id ,user , carbonQuantity ,ConsumptionType.ACCOMMODATION, consumptionImpactType ,  startDate ,  endDate);
+    public Accommodation( User user , float carbonQuantity , int quantity ,  AllTypesOfConsumption consumptionImpactType , LocalDate startDate , LocalDate endDate) {
+        super(user , carbonQuantity ,ConsumptionType.ACCOMMODATION, consumptionImpactType ,  startDate ,  endDate);
         this.impact = calculateImpact();
         this.quantity =quantity;
     }
     public Accommodation(int id , User user , float carbonQuantity , float impact , AllTypesOfConsumption consumptionImpactType , LocalDate startDate , LocalDate endDate) {
-        super(id, user, carbonQuantity,ConsumptionType.ACCOMMODATION, consumptionImpactType, startDate, endDate);
+        super(user, carbonQuantity,ConsumptionType.ACCOMMODATION, consumptionImpactType, startDate, endDate);
         this.impact = impact;
     }
 

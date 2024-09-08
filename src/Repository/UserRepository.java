@@ -1,6 +1,5 @@
 package Repository;
 
-import Services.UserInterface;
 import Domain.*;
 import config.Database;
 
@@ -15,19 +14,29 @@ import java.util.Optional;
 public class UserRepository {
 
 
-    public  User getUser(int id) {
-        Optional<User> user = getAllUsers().stream().filter(user1 -> user1.getId() == id).findFirst();
-        if (user.isPresent()) {
-            return user.get();
-        } else {
-            System.out.println("User not found ");
+    public User getUser(int id) {
+        String query = "SELECT * FROM users WHERE id = ?";
+        try (Connection connection = Database.getInstance().getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            String name;
+            String password;
+            int age;
+            while (resultSet.next()) {
+                name  = resultSet.getString("name");
+                password = resultSet.getString("password");
+                age = resultSet.getInt("age");
+                return  new User(id , name , password , age);
+            }
             return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
     public boolean update(User user) {
 
-        String query = "UPDATE users SET name = ? , password = ? , age = ? WHERE = ?";
+        String query = "UPDATE users SET name = ? , password = ? , age = ? WHERE id = ?";
         try (Connection connection = Database.getInstance().getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getPassword());

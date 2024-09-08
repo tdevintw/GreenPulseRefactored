@@ -17,8 +17,8 @@ public class ConsumptionRepository {
             preparedStatement.setInt(1, user_id);
             preparedStatement.setFloat(2, consumption.getCarbonQuantity());
             preparedStatement.setFloat(3, consumption.getImpact());
-            preparedStatement.setString(4, consumption.getConsumptionType().toString());
-            preparedStatement.setString(5, consumption.getConsumptionImpactType().toString());
+            preparedStatement.setObject(4, consumption.getConsumptionType() , Types.OTHER);
+            preparedStatement.setObject(5, consumption.getConsumptionImpactType() , Types.OTHER);
             preparedStatement.setDate(6, Date.valueOf(consumption.getStartDate()));
             preparedStatement.setDate(7, Date.valueOf(consumption.getEndDate()));
             int rowAffected = preparedStatement.executeUpdate();

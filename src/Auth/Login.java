@@ -1,6 +1,7 @@
 package Auth;
 
 import Domain.User;
+import Repository.ConsumptionRepository;
 import config.Database;
 
 import java.sql.Connection;
@@ -36,8 +37,10 @@ public class Login {
                 System.out.println("Name or Password is incorrect");
                 return null;
             }
-            System.out.println("welcome back " + findUser.get().getName());
+            ConsumptionRepository consumptionRepository = new ConsumptionRepository();
+            findUser.get().setConsumptions(consumptionRepository.getUserConsumptions(findUser.get().getId()));
             return findUser.get();
+
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

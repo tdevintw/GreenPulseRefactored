@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-public class UserServiceImpl implements UserInterface {
+public class UserServiceImpl implements UserService {
 
     private static UserRepository userRepository;
 
@@ -41,20 +41,23 @@ public class UserServiceImpl implements UserInterface {
     }
 
     @Override
-    public List<User> filterUsersWithMoreThen3000(User usr, LocalDate startDate, LocalDate endDate) {
+    public List<User> filterUsersWithMoreThen3000() {
         return getAllUsers().stream().filter(user -> TotalConsumption.TotalConsumptionOfUser(user)>=3000).collect(Collectors.toList());
 
     }
 
     @Override
     public List<User> usersWithNoConsumption(LocalDate startDate, LocalDate endDate) {
-        return getAllUsers().stream().filter(user -> TotalConsumption.TotalConsumptionOfUser(user) == 0).collect(Collectors.toList());
+
+        return getAllUsers().stream().
+                filter(user -> TotalConsumption.TotalConsumptionOfUserWithFilter(user,startDate , endDate) == 0).collect(Collectors.toList());
     }
 
 
     @Override
-    public List<User> filterUsersByConsumptionTotal() {
-        return getAllUsers().stream().sorted((user1, user2) -> Double.compare(TotalConsumption.TotalConsumptionOfUser(user2), TotalConsumption.TotalConsumptionOfUser(user1))).collect(Collectors.toList());
+    public void filterUsersByConsumptionTotal() {
+         getAllUsers().stream().sorted((user1, user2) -> Double.compare(TotalConsumption.TotalConsumptionOfUser(user2), TotalConsumption.TotalConsumptionOfUser(user1))).collect(Collectors.toList())
+                 .forEach(user -> System.out.println(user.toString() + ", With a total of carbon : " + TotalConsumption.TotalConsumptionOfUser(user) ));
     }
 
 

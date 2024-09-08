@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public abstract class Consumption {
-    protected final int id;
+    protected int id;
     protected float carbonQuantity;
     protected float impact;
     protected User user;
@@ -15,8 +15,7 @@ public abstract class Consumption {
     protected LocalDate startDate;
     protected LocalDate endDate;
 
-    public Consumption(int id , User user , float carbonQuantity , ConsumptionType consumptionType , AllTypesOfConsumption consumptionImpactType , LocalDate startDate , LocalDate endDate ){
-        this.id = id;
+    public Consumption(User user , float carbonQuantity , ConsumptionType consumptionType , AllTypesOfConsumption consumptionImpactType , LocalDate startDate , LocalDate endDate ){
         this.user = user;
         this.carbonQuantity = carbonQuantity;
         this.consumptionType = consumptionType;
@@ -86,4 +85,8 @@ public abstract class Consumption {
     }
 
     public abstract float calculateImpact();
+
+    public String toString(){
+        return "consumption user : " + user.getName() + ", quantity : " + carbonQuantity + ", Consumption Type : "+consumptionType +" , "+ consumptionImpactType + " with impact "  + impact + ", between " + startDate + " and " + endDate;
+    }
 }

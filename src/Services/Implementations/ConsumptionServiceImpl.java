@@ -4,40 +4,48 @@ import Domain.*;
 import Domain.Enum.AllTypesOfConsumption;
 import Domain.Enum.ConsumptionType;
 import Repository.ConsumptionRepository;
-import Repository.UserRepository;
 import Services.ConsumptionService;
+import utils.ConsumptionRange;
 import utils.TotalConsumption;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ConsumptionServiceImpl implements ConsumptionService {
 
     private static ConsumptionRepository consumptionRepository;
-    private static UserRepository userRepository;
 
 
-    public  ConsumptionServiceImpl(){
+    public ConsumptionServiceImpl() {
         consumptionRepository = new ConsumptionRepository();
-        userRepository = new UserRepository();
     }
 
-    public boolean add(ConsumptionType consumptionType, int id, User user, float carbonQuantity, int intParam, AllTypesOfConsumption consumptionImpactType, LocalDate startDate, LocalDate endDate) {
+    public boolean add(ConsumptionType consumptionType, User user, float carbonQuantity, int intParam, AllTypesOfConsumption consumptionImpactType, LocalDate startDate, LocalDate endDate) {
+        if (ConsumptionRange.isConsumptionExist(user.getConsumptions(), startDate, endDate)) {
+            System.out.println("Consumption Range already exist");
+            return false;
+        }
         Consumption consumption = switch (consumptionType) {
-            case TRANSPORT -> new Transport(id, user, carbonQuantity, intParam, consumptionImpactType, startDate, endDate);
-            case FOOD -> new Food(id, user, carbonQuantity, intParam, consumptionImpactType, startDate, endDate);
+            case TRANSPORT -> new Transport(user, carbonQuantity, intParam, consumptionImpactType, startDate, endDate);
+            case FOOD -> new Food(user, carbonQuantity, intParam, consumptionImpactType, startDate, endDate);
             case ACCOMMODATION ->
-                    new Accommodation(id, user, carbonQuantity, intParam, consumptionImpactType, startDate, endDate);
+                    new Accommodation(user, carbonQuantity, intParam, consumptionImpactType, startDate, endDate);
         };
-
-        return consumptionRepository.add(consumption , user.getId());
+        user.setConsumption(consumption);
+        return consumptionRepository.add(consumption, user.getId());
     }
 
     public double calculateAverageOfConsumptionWithinARange(User user, LocalDate startDate, LocalDate endDate) {
         List<Consumption> userConsumptionWithinRange = user.getConsumptions().stream()
-                .filter(consumption -> (consumption.getStartDate().isAfter(startDate) || consumption.getStartDate().isEqual(startDate)) && (consumption.getEndDate().isBefore(startDate) || consumption.getEndDate().isEqual(endDate)))
+                .filter(consumption -> (consumption.getStartDate().isAfter(startDate) || consumption.getStartDate().isEqual(startDate)) && (consumption.getEndDate().isBefore(endDate) || consumption.getEndDate().isEqual(endDate)))
                 .toList();
-        return TotalConsumption.TotalConsumptionOfListOfConsumptions(userConsumptionWithinRange);
+        if(userConsumptionWithinRange.isEmpty()){
+            return 0;
+        }
+        return TotalConsumption.TotalConsumptionOfListOfConsumptions(userConsumptionWithinRange)/userConsumptionWithinRange.size();
+    }
+
+    public List<Consumption> getUserConsumptions(User user){
+        return consumptionRepository.getUserConsumptions(user.getId());
     }
 }

@@ -5,7 +5,7 @@ import Domain.User;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface UserInterface {
+public interface UserService {
     User getUser(int id);
 
     boolean update(User user);
@@ -14,10 +14,10 @@ public interface UserInterface {
 
     List<User> getAllUsers();
 
-    List<User> filterUsersWithMoreThen3000(User usr , LocalDate startDate , LocalDate endDate);
+    List<User> filterUsersWithMoreThen3000();
 
     List<User> usersWithNoConsumption(LocalDate startDate , LocalDate endDate);
 
 
-    List<User> filterUsersByConsumptionTotal();
+    void filterUsersByConsumptionTotal();
 }

@@ -55,4 +55,7 @@ public class User {
     public void setConsumption(Consumption consumption) {
         this.consumptions.add(consumption);
     }
+    public String toString(){
+        return "Name : " + this.name + ",  Age : "+ this.age;
+    }
 }

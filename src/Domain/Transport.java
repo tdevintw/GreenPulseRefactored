@@ -9,14 +9,14 @@ public class Transport extends Consumption {
 
     private int distance ;
 
-    public Transport(int id , User user , float carbonQuantity , int distance ,  AllTypesOfConsumption consumptionImpactType , LocalDate startDate , LocalDate endDate) {
-        super(id ,user , carbonQuantity ,ConsumptionType.TRANSPORT, consumptionImpactType ,  startDate ,  endDate);
+    public Transport( User user , float carbonQuantity , int distance ,  AllTypesOfConsumption consumptionImpactType , LocalDate startDate , LocalDate endDate) {
+        super(user , carbonQuantity ,ConsumptionType.TRANSPORT, consumptionImpactType ,  startDate ,  endDate);
         this.impact = calculateImpact();
         this.distance =distance;
     }
 
     public Transport(int id , User user , float carbonQuantity , float impact , AllTypesOfConsumption consumptionImpactType , LocalDate startDate , LocalDate endDate) {
-        super(id, user, carbonQuantity,ConsumptionType.TRANSPORT, consumptionImpactType, startDate, endDate);
+        super(user, carbonQuantity,ConsumptionType.TRANSPORT, consumptionImpactType, startDate, endDate);
         this.impact = impact;
     }
 
