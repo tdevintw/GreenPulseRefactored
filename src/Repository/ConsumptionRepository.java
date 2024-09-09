@@ -6,6 +6,7 @@ import config.Database;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +18,8 @@ public class ConsumptionRepository {
             preparedStatement.setInt(1, user_id);
             preparedStatement.setFloat(2, consumption.getCarbonQuantity());
             preparedStatement.setFloat(3, consumption.getImpact());
-            preparedStatement.setObject(4, consumption.getConsumptionType() , Types.OTHER);
-            preparedStatement.setObject(5, consumption.getConsumptionImpactType() , Types.OTHER);
+            preparedStatement.setObject(4, consumption.getConsumptionType(), Types.OTHER);
+            preparedStatement.setObject(5, consumption.getConsumptionImpactType(), Types.OTHER);
             preparedStatement.setDate(6, Date.valueOf(consumption.getStartDate()));
             preparedStatement.setDate(7, Date.valueOf(consumption.getEndDate()));
             int rowAffected = preparedStatement.executeUpdate();
@@ -75,10 +76,10 @@ public class ConsumptionRepository {
             preparedStatement.setDate(4, Date.valueOf(consumption.getEndDate()));
             preparedStatement.setInt(5, consumption.getId());
             int affectedRows = preparedStatement.executeUpdate();
-            if(affectedRows>0){
+            if (affectedRows > 0) {
                 System.out.println("consumption updated");
                 return true;
-            }else{
+            } else {
                 System.out.println("can't update consumption");
                 return false;
             }
@@ -87,16 +88,16 @@ public class ConsumptionRepository {
         }
     }
 
-    public List<Consumption> getUserConsumptions(int user_id){
+    public List<Consumption> getUserConsumptions(int user_id) {
         String query = "SELECT * FROM consumptions WHERE user_id = ?";
         List<Consumption> allUserConsumptions = new ArrayList<>();
-        Consumption consumption ;
+        Consumption consumption;
         UserRepository userRepository = new UserRepository();
         User user = userRepository.getUser(user_id);
         try (Connection connection = Database.getInstance().getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, user_id);
             ResultSet userConsumptions = preparedStatement.executeQuery();
-            while(userConsumptions.next()){
+            while (userConsumptions.next()) {
                 int id = userConsumptions.getInt("id");
                 float carbonQuantity = userConsumptions.getFloat("carbon_quantity");
                 float impact = userConsumptions.getFloat("impact");
@@ -132,6 +133,8 @@ public class ConsumptionRepository {
             throw new RuntimeException(e);
         }
     }
+
+
 
 
 }

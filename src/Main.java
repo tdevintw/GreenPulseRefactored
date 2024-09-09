@@ -18,6 +18,8 @@ public class Main {
     private static User currentUser;
     private static UserService userService = new UserServiceImpl();
     private static ConsumptionService consumptionService = new ConsumptionServiceImpl();
+    private static ReportService reportService = new ReportServiceImpl();
+
 
 
     public static void main(String[] args) throws SQLException {
@@ -85,9 +87,6 @@ public class Main {
                 break;
             case 6:
                 myConsumptions();
-                break;
-            case 7:
-                myReports();
                 break;
             case 8:
                 filterUsersWithMoreConsumptionThen3000KG();
@@ -314,6 +313,17 @@ public class Main {
 
 
     public static void createReport() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Create (DAILY , WEEKLY , MONTHLY) REPORT");
+        String choice = input.nextLine();
+        if(choice.equalsIgnoreCase("DAILY")){
+            reportService.generateDailyReport(currentUser);
+        }else if(choice.equalsIgnoreCase("WEEKLY")){
+            reportService.generateWeeklyReport(currentUser);
+        }
+        else if(choice.equalsIgnoreCase("MONTHLY")){
+            reportService.generateMonthlyReport(currentUser);
+        }
     }
 
 
@@ -334,8 +344,6 @@ public class Main {
     }
 
 
-    public static void myReports() {
-    }
 
 
     public static void filterUsersWithMoreConsumptionThen3000KG() {
@@ -349,6 +357,11 @@ public class Main {
         String startDate = input.nextLine();
         System.out.println("Enter end date");
         String endDate = input.nextLine();
-        userService.usersWithNoConsumption(LocalDate.parse(startDate), LocalDate.parse(endDate)).forEach(user -> System.out.println(user.toString()));
+
+        if(userService.usersWithNoConsumption(LocalDate.parse(startDate), LocalDate.parse(endDate)).isEmpty()){
+            System.out.println("There is no users offline turning this range");
+        }else{
+            userService.usersWithNoConsumption(LocalDate.parse(startDate), LocalDate.parse(endDate)).forEach(user -> System.out.println(user.toString()));
+        }
     }
 }
